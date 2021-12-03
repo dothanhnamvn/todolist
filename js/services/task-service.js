@@ -9,6 +9,7 @@ export default class taskService {
     }
 
     deleteTaskApi(id) {
+        console.log(`${this.url}/${id}`);
         return axios({
             url: `${this.url}/${id}`,
             method: "DELETE",
@@ -32,7 +33,7 @@ export default class taskService {
 
     updateTaskApi(task) {
         return axios({
-            url: `${this.url}/${food.id}`,
+            url: `${this.url}/${task.id}`,
             method: "PUT",
             data: task,
         });

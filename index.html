@@ -30,16 +30,18 @@
             <h2>My Tasks</h2>
             <p>November 30,2021</p>
           </div>
-          <div class="card__add">
-            <input
-              id="newTask"
-              type="text"
-              placeholder="Enter an activity..."
-            />
-            <button id="addItem">
-              <i class="fa fa-plus"></i>
-            </button>
-          </div>
+          <form>
+            <div class="card__add">
+              <input
+                id="newTask"
+                type="text"
+                placeholder="Enter an activity..."
+              />
+              <button id="addItem" type="button" onclick="addTask(event)">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </form>
           <div class="card__todo" id="listTask">
           </div>
         </div>
