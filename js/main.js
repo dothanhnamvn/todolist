@@ -19,7 +19,7 @@ const renderData = (arr) => {
                     <button class="remove" onclick="deleteTask(${task.id})">
                         <i class="fa fa-trash-alt"></i>
                     </button>
-                    <button class="complete">
+                    <button class="complete" onclick="updateTask(${task.id})">
                         <i class="far fa-check-circle"></i>
                         <i class="fas fa-check-circle"></i>
                     </button>
@@ -34,7 +34,7 @@ const renderData = (arr) => {
                     <button class="remove" onclick="deleteTask(${task.id})">
                         <i class="fa fa-trash-alt"></i>
                     </button>
-                    <button class="complete">
+                    <button class="complete" onclick="updateTask(${task.id})">
                         <i class="far fa-check-circle"></i>
                         <i class="fas fa-check-circle"></i>
                     </button>
@@ -69,7 +69,6 @@ fetchData();
 /**
  * Delete Task
  */
-
 const deleteTask = (id) => {
     listTaskService
         .deleteTaskApi(id)
@@ -94,23 +93,51 @@ const addTask = (event) => {
     const taskName = getEle("newTask").value;
     const taskStatus = false;
 
-    if (taskName){}
-    //tao doi tuong food tu lop doi tuong Food
-    const task = new Task(
-        "",
-        taskName,
-        taskStatus
-    );
+    if (taskName.trim()) {
+        //tao doi tuong task tu lop doi tuong Task
+        const task = new Task(
+            "",
+            taskName,
+            taskStatus
+        );
 
-    listTaskService
-        .addTaskApi(task)
-        .then(() => {
-            alert("Add success!");
-            fetchData();
-            document.getElementsByClassName("close")[0].click();
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        listTaskService
+            .addTaskApi(task)
+            .then(() => {
+                alert("Add success!");
+                fetchData();
+                document.getElementsByClassName("close")[0].click();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    } else{
+        alert("Task empty!");
+    }
+    
 };
 window.addTask = addTask;
+
+/**
+ * Update Food
+ */
+ const updateTask = async (id) => {
+    console.log(id);
+    const taskDetail = await listTaskService.getTaskById(id);
+    //console.log(taskDetail.data);
+    const { taskName, taskStatus } = taskDetail.data;
+
+    const task = new Task(
+        id,
+        taskName,
+        !taskStatus,
+    );
+    //console.log(task);
+  
+    const result = await listTaskService.updateTaskApi(task);
+    if (result.status == 200) {
+      alert("Change Status Success!");
+      fetchData();
+    }
+  };
+  window.updateTask = updateTask;
